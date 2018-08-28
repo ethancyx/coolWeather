@@ -8,6 +8,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.android.ethan.coolweather.R;
 import com.android.ethan.coolweather.gson.Forecast;
 import com.android.ethan.coolweather.gson.Weather;
+import com.android.ethan.coolweather.service.AutoUpdateService;
 import com.android.ethan.coolweather.util.HttpUtil;
 import com.android.ethan.coolweather.util.Utility;
 import com.bumptech.glide.Glide;
@@ -176,6 +178,8 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sprotText.setText(sprot);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent =new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     /**
