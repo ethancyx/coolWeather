@@ -95,7 +95,9 @@ public class WeatherActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString =prefs.getString("weather",null);
+
         if (weatherString != null){
+            Log.e("测试",weatherString);
             Weather weather = Utility.handleWeatherResponse(weatherString);
             mWeatherId=weather.basic.weatherId;
             showWeatherInfo(weather);
@@ -111,6 +113,7 @@ public class WeatherActivity extends AppCompatActivity {
                 if (nowCityId==mWeatherId){
                 requestWeather(mWeatherId);
                 }else {
+                    mWeatherId=nowCityId;
                     requestWeather(nowCityId);
                 }
                 Log.e("TAG",nowCityId);

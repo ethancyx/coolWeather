@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.android.ethan.coolweather.gson.Weather;
 import com.android.ethan.coolweather.util.HttpUtil;
@@ -54,7 +55,7 @@ public class AutoUpdateService extends Service {
             public void onResponse(Call call, Response response) throws IOException {
                 String bingPic =response.body().string();
                 SharedPreferences.Editor editor =PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
-                editor.putString("weather",bingPic);
+                editor.putString("bing_pic",bingPic);
                 editor.apply();
             }
         });
@@ -64,6 +65,7 @@ public class AutoUpdateService extends Service {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString =prefs.getString("weather",null);
+        Log.e("测试",weatherString);
         if (weatherString!=null){
             Weather weather = Utility.handleWeatherResponse(weatherString);
             String weatherId=weather.basic.weatherId;
@@ -78,7 +80,7 @@ public class AutoUpdateService extends Service {
                 public void onResponse(Call call, Response response) throws IOException {
                     String responseText =response.body().string();
                     Weather weather =Utility.handleWeatherResponse(responseText);
-                    if (weather!=null&&"ok".equals(weather.status)){
+                    if (weather!=null &&"ok".equals(weather.status)){
                         SharedPreferences.Editor editor =PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
                         editor.putString("weather",responseText);
                         editor.apply();
